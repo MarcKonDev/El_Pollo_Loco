@@ -13,27 +13,27 @@ function init(){
 }
 
 window.addEventListener("keydown", (e) => {
-    if(e.keyCode == 39){
+    if(e.code == 'ArrowRight'){
         keyboard.RIGHT = true;
     }
 
-    if(e.keyCode == 37){
+    if(e.code == 'ArrowLeft'){
         keyboard.LEFT = true;
     }
     
-    if(e.keyCode == 38){
+    if(e.code == 'ArrowUp'){
         keyboard.UP = true;
     }
     
-    if(e.keyCode == 40){
+    if(e.code == 'ArrowDown'){
         keyboard.DOWN = true;
     }
 
-    if(e.keyCode == 32){
+    if(e.code == 'Space'){
         keyboard.SPACE = true;
     }
 
-    if(e.keyCode == 68){
+    if(e.code == 'KeyD'){
         keyboard.D = true;
     }
     
@@ -41,27 +41,27 @@ window.addEventListener("keydown", (e) => {
 });
 
 window.addEventListener("keyup", (e) => {
-    if(e.keyCode == 39){
+    if(e.code == 'ArrowRight'){
         keyboard.RIGHT = false;
     }
 
-    if(e.keyCode == 37){
+    if(e.code == 'ArrowLeft'){
         keyboard.LEFT = false;
     }
     
-    if(e.keyCode == 38){
+    if(e.code == 'ArrowUp'){
         keyboard.UP = false;
     }
     
-    if(e.keyCode == 40){
+    if(e.code == 'ArrowDown'){
         keyboard.DOWN = false;
     }
 
-    if(e.keyCode == 32){
+    if(e.code == 'Space'){
         keyboard.SPACE = false;
     }
 
-    if(e.keyCode == 68){
+    if(e.code == 'KeyD'){
         keyboard.D = false;
     }
 });
