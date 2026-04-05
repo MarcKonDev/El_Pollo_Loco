@@ -1,12 +1,12 @@
 class World {
 
     character = new Character();
+    statusBar = new StatusBar();
     level = level1;
     canvas;
     ctx;
     keyboard;
     camera_x = 0;
-    statusBar = new StatusBar();
     throwableObjects = [];
 
     constructor(canvas, keyboard) {
@@ -63,6 +63,7 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.level.coins);
 
         this.ctx.translate(-this.camera_x, 0)
 
