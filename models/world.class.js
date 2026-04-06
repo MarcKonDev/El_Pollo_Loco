@@ -2,6 +2,8 @@ class World {
 
     character = new Character();
     statusBar = new StatusBar();
+    coinBar = new CoinBar();
+    bottleBar = new BottleBar();
     level = level1;
     canvas;
     ctx;
@@ -31,7 +33,7 @@ class World {
 
     checkThrowObjects(){
         if(this.keyboard.D){
-            let bottle = new ThrowableObject(this.character.x + 70, this.character.y+100)
+            let bottle = new ThrowableObject(this.character.x + 70, this.character.y + 100)
             this.throwableObjects.push(bottle);
         }
 
@@ -42,7 +44,6 @@ class World {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy)
-
             }
         });
     }
@@ -51,21 +52,16 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0)
-
         this.addObjectsToMap(this.level.backgroundObjects);
-
-        this.ctx.translate(-this.camera_x, 0) // Back
-        this.addToMap(this.statusBar);
-        this.ctx.translate(this.camera_x, 0) // Forwards
-
-
-        this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.coins);
-
-        this.ctx.translate(-this.camera_x, 0)
+        this.addToMap(this.character);
+        this.ctx.translate(-this.camera_x, 0) // Back
+        this.addToMap(this.statusBar);
+        this.addToMap(this.coinBar);
+        this.addToMap(this.bottleBar);
 
         let self = this;
         requestAnimationFrame(function () {
