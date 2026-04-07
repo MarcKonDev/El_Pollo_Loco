@@ -28,11 +28,26 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
+            this.checkCoinCollection();                                         // 1 Coin abfrage starten 
         }, 200);
     }
 
-    checkThrowObjects(){
-        if(this.keyboard.D){
+    checkCoinCollection() {                                                     // 2. Funktion
+        this.level.coins.forEach((coin, index) => {                                    // geht alle Coins durch
+            if (this.character.isColliding(coin)) {                               // wenn character mit coin kollidiert
+                this.character.collect();                                       // nimmt münze auf
+                this.coinBar.setPercentage(this.character.collectedCoins)         // passt bottleBar bild an
+                this.removeCoin(index)
+            }
+        });
+    }
+
+    removeCoin(index){
+        this.level.coins.splice(index, 1)
+    }
+
+    checkThrowObjects() {
+        if (this.keyboard.D) {
             let bottle = new ThrowableObject(this.character.x + 70, this.character.y + 100)
             this.throwableObjects.push(bottle);
         }
