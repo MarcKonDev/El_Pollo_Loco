@@ -18,6 +18,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.checkThrow();
     }
 
     setWorld() {
@@ -27,9 +28,23 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkThrowObjects();
             this.checkObjectsToCollect();                                         // 1 Coin abfrage starten 
         }, 200);
+    }
+
+    checkThrow(){
+        let throwLock = false;
+        window.addEventListener('keydown', (e) =>{
+            if(e.code == 'KeyD' && !throwLock){
+                throwLock = true;
+                this.checkThrowObjects();
+            }
+        });
+        window.addEventListener('keyup', (e) =>{
+            if(e.code == 'KeyD'){
+                throwLock = false;
+            }
+        });
     }
 
     checkObjectsToCollect() {                                                     // 2. Funktion                              Objekt umgeändert
@@ -50,9 +65,11 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D) {
+        if (this.character.collectedBottles > 0) {
             let bottle = new ThrowableObject(this.character.x + 70, this.character.y + 100)
             this.throwableObjects.push(bottle);
+            this.character.collectedBottles -= 20;
+            this.bottleBar.setPercentage(this.character.collectedBottles) 
         }
 
     }
