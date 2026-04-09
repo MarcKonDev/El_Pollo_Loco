@@ -28,22 +28,25 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-            this.checkCoinCollection();                                         // 1 Coin abfrage starten 
+            this.checkObjectsToCollect();                                         // 1 Coin abfrage starten 
         }, 200);
     }
 
-    checkCoinCollection() {                                                     // 2. Funktion
+    checkObjectsToCollect() {                                                     // 2. Funktion                              Objekt umgeändert
         this.level.coins.forEach((coin, index) => {                                    // geht alle Coins durch
             if (this.character.isColliding(coin)) {                               // wenn character mit coin kollidiert
-                this.character.collect();                                       // nimmt münze auf
+                this.character.collect(coin);                                       // nimmt münze auf
                 this.coinBar.setPercentage(this.character.collectedCoins)         // passt bottleBar bild an
-                this.removeCoin(index)
+                this.level.coins.splice(index, 1)
             }
         });
-    }
-
-    removeCoin(index){
-        this.level.coins.splice(index, 1)
+        this.level.bottles.forEach((bottle, index)=>{
+            if(this.character.isColliding(bottle)){
+                this.character.collect(bottle);                                       // nimmt münze auf
+                this.bottleBar.setPercentage(this.character.collectedBottles)         // passt bottleBar bild an
+                this.level.bottles.splice(index, 1)
+            }
+        });
     }
 
     checkThrowObjects() {
@@ -65,7 +68,7 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
+        this.ctx.save()                                         // aktuellen Canvasstand merken.
         this.ctx.translate(this.camera_x, 0)
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
@@ -74,7 +77,7 @@ class World {
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addToMap(this.character);
-        this.ctx.translate(-this.camera_x, 0) // Back
+        this.ctx.restore();                                    // Canvas zurücksetzen
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);

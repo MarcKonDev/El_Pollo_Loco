@@ -6,7 +6,8 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
 
-    collectedCoins = 0;                                                                 // gesammelte Coins startet bei 0
+    collectedCoins = 0;
+    collectedBottles = 0;                                                             // gesammelte Coins startet bei 0
 
     applyGravity() {
         setInterval(() => {
@@ -52,9 +53,15 @@ class MovableObject extends DrawableObject {
             this.y < mo.y + mo.height
     }
 
-    collect() {
-        if (this.collectedCoins < 100) {
+    collect(object) {
+        if (object instanceof Coins && this.collectedCoins < 100) {
             this.collectedCoins += 20;
+            console.log(object);
+        }
+
+        if (object instanceof Bottle && this.collectedBottles < 100) {
+            this.collectedBottles += 20;
+            console.log(object);
         }
     }
 
