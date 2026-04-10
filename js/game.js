@@ -8,8 +8,6 @@ function init() {
     world = new World(canvas, keyboard);
 
     console.log('My Character is', world.character);
-
-
 }
 
 window.addEventListener("keydown", (e) => {
@@ -36,8 +34,6 @@ window.addEventListener("keydown", (e) => {
     if (e.code == 'KeyD') {
         keyboard.D = true;
     }
-
-
 });
 
 window.addEventListener("keyup", (e) => {

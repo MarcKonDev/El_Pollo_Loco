@@ -23,6 +23,9 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        this.level.enemies.forEach(enemy => {
+            enemy.world = this;
+        });
     }
 
     run() {
@@ -32,16 +35,16 @@ class World {
         }, 200);
     }
 
-    checkThrow(){
+    checkThrow() {
         let throwLock = false;
-        window.addEventListener('keydown', (e) =>{
-            if(e.code == 'KeyD' && !throwLock){
+        window.addEventListener('keydown', (e) => {
+            if (e.code == 'KeyD' && !throwLock) {
                 throwLock = true;
                 this.checkThrowObjects();
             }
         });
-        window.addEventListener('keyup', (e) =>{
-            if(e.code == 'KeyD'){
+        window.addEventListener('keyup', (e) => {
+            if (e.code == 'KeyD') {
                 throwLock = false;
             }
         });
@@ -55,8 +58,8 @@ class World {
                 this.level.coins.splice(index, 1)
             }
         });
-        this.level.bottles.forEach((bottle, index)=>{
-            if(this.character.isColliding(bottle)){
+        this.level.bottles.forEach((bottle, index) => {
+            if (this.character.isColliding(bottle)) {
                 this.character.collect(bottle);                                       // nimmt münze auf
                 this.bottleBar.setPercentage(this.character.collectedBottles)         // passt bottleBar bild an
                 this.level.bottles.splice(index, 1)
@@ -69,7 +72,7 @@ class World {
             let bottle = new ThrowableObject(this.character.x + 70, this.character.y + 100)
             this.throwableObjects.push(bottle);
             this.character.collectedBottles -= 20;
-            this.bottleBar.setPercentage(this.character.collectedBottles) 
+            this.bottleBar.setPercentage(this.character.collectedBottles)
         }
 
     }
