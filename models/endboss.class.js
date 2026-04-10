@@ -4,9 +4,11 @@ class Endboss extends MovableObject {
     width = 250;
     y = 55;
     speed = 15;
-   isAttacking = false;
+    isAttacking = false;
     isReturning = false;
     fightMode = false;
+    energy = 25; 
+    lastHit = 0;
 
 
     IMAGES_WALKING = [
@@ -75,16 +77,33 @@ class Endboss extends MovableObject {
 
     handleBossLogic() {
         if (!this.world) return;
-        if (this.world.character.x > 1800 && !this.fightMode) {
+        if (this.isDead()) {
+            this.playAnimation(this.IMAGES_DEAD);
+            this.handleDeathSink(); // Separate Funktion für den Abgang
+        } else if (this.isHurt()) {
+            this.playAnimation(this.IMAGES_HURT);
+        } else if (this.world.character.x > 1800 && !this.fightMode) {
             this.moveTowardsStartPostion();
-        }else if (this.isAttacking) {
+        } else if (this.isAttacking) {
             this.performAttack();
-        }else if (this.isReturning) {
+        } else if (this.isReturning) {
             this.returnToPosition();
-        }else if (this.fightMode) {
+        } else if (this.fightMode) {
             this.playAnimation(this.IMAGES_ALERT);
         }
     }
+
+    handleDeathSink() {
+    if (!this.isDeadAlready) {
+        this.isDeadAlready = true; // Markieren, dass der Tod eingeleitet wurde
+        setTimeout(() => {
+            // Ein Intervall starten, das ihn langsam absinken lässt
+            setInterval(() => {
+                this.y += 10;
+            }, 50);
+        }, 1000);
+    }
+}
 
     moveTowardsStartPostion() {
         this.playAnimation(this.IMAGES_WALKING);

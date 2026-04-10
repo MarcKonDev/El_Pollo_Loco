@@ -31,8 +31,24 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkObjectsToCollect();                                         // 1 Coin abfrage starten 
+            this.checkObjectsToCollect();
+            this.checkBottleCollision();
         }, 200);
+    }
+
+    checkBottleCollision() {
+        this.throwableObjects.forEach((bottle, bottleIndex) => {
+            this.level.enemies.forEach((enemy, enemyIndex) => {
+                if (bottle.isColliding(enemy)) {
+                    if (enemy instanceof Endboss) {
+                        enemy.hit();
+                    } else {
+                        this.level.enemies.splice(enemyIndex, 1);
+                    }
+                    this.throwableObjects.splice(bottleIndex, 1);
+                }
+            });
+        });
     }
 
     checkThrow() {
@@ -69,10 +85,14 @@ class World {
 
     checkThrowObjects() {
         if (this.character.collectedBottles > 0) {
-            let bottle = new ThrowableObject(this.character.x + 70, this.character.y + 100)
+            let direction = this.character.otherDirection ? 'left' : 'right';
+
+            // Wir erstellen die Flasche und geben die Richtung mit
+            let bottle = new ThrowableObject(this.character.x + 70, this.character.y + 100, direction);
+
             this.throwableObjects.push(bottle);
             this.character.collectedBottles -= 20;
-            this.bottleBar.setPercentage(this.character.collectedBottles)
+            this.bottleBar.setPercentage(this.character.collectedBottles);
         }
 
     }
