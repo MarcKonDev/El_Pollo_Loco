@@ -37,19 +37,26 @@ class World {
     }
 
     checkBottleCollision() {
-        this.throwableObjects.forEach((bottle, bottleIndex) => {
-            this.level.enemies.forEach((enemy, enemyIndex) => {
-                if (bottle.isColliding(enemy)) {
-                    if (enemy instanceof Endboss) {
-                        enemy.hit();
-                    } else {
-                        this.level.enemies.splice(enemyIndex, 1);
-                    }
-                    this.throwableObjects.splice(bottleIndex, 1);
+    this.throwableObjects.forEach((bottle, bottleIndex) => {
+        if (bottle.isBroken) return; 
+        this.level.enemies.forEach((enemy, enemyIndex) => {
+            if (bottle.isColliding(enemy)) {
+                if (enemy instanceof Endboss) {
+                    enemy.hit();
+                } else {
+                    this.level.enemies.splice(enemyIndex, 1);
                 }
-            });
+                bottle.break(); 
+                setTimeout(() => {
+                    let currentIndex = this.throwableObjects.indexOf(bottle);
+                    if (currentIndex !== -1) {
+                        this.throwableObjects.splice(currentIndex, 1);
+                    }
+                }, 200);
+            }
         });
-    }
+    });
+}
 
     checkThrow() {
         let throwLock = false;
