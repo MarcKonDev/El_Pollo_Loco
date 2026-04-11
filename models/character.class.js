@@ -88,16 +88,16 @@ class Character extends MovableObject {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
-                this.resetIdleTimer(); // Zeit zurücksetzen
+                this.resetIdleTimer();
             }
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
-                this.resetIdleTimer(); // Zeit zurücksetzen
+                this.resetIdleTimer();
             }
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
-                this.resetIdleTimer(); // Zeit zurücksetzen
+                this.resetIdleTimer();
             }
             this.world.camera_x = Math.max(-this.x + 100, -2150);
         }, 1000 / 60);
@@ -106,6 +106,9 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
+                if (this.currentImage >= this.IMAGES_DEAD.length) {
+                    this.currentImage = this.IMAGES_DEAD.length - 1;
+                }
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
                 this.resetIdleTimer();
@@ -115,7 +118,7 @@ class Character extends MovableObject {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                     this.playAnimation(this.IMAGES_WALKING);
                 } else {
-                    this.handleIdleAnimations(); // Hier kommt die Idle-Logik rein
+                    this.handleIdleAnimations();
                 }
             }
         }, 100);
@@ -126,12 +129,11 @@ class Character extends MovableObject {
     }
 
     handleIdleAnimations() {
-        let timePassed = (new Date().getTime() - this.lastMovementTime) / 1000; // Differenz in Sekunden
-
+        let timePassed = (new Date().getTime() - this.lastMovementTime) / 1000; 
         if (timePassed > 5) {
-            this.playAnimation(this.IMAGES_LONG_IDLE); // Pepe schläft ein
+            this.playAnimation(this.IMAGES_LONG_IDLE); 
         } else {
-            this.playAnimation(this.IMAGES_IDLE); // Pepe wartet nur
+            this.playAnimation(this.IMAGES_IDLE);
         }
     }
 

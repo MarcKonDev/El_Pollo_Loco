@@ -10,6 +10,7 @@ class World {
     keyboard;
     camera_x = 0;
     throwableObjects = [];
+    gameStopped = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -33,30 +34,55 @@ class World {
             this.checkCollisions();
             this.checkObjectsToCollect();
             this.checkBottleCollision();
+            this.checkGameOver();
         }, 200);
     }
 
+    checkGameOver() {
+        if (this.character.isDead()) {
+            this.showEndscreen('img/You won, you lost/Game Over.png');
+        } else if (this.level.enemies.find(e => e instanceof Endboss)?.isDead()) {
+            this.showEndscreen('img/You won, you lost/You Win A.png');
+        }
+    }
+
+    showEndscreen(imagePath) {
+        if (!this.gameStopped) {
+            this.gameStopped = true;
+            let screen = document.getElementById('endscreen');
+            screen.src = imagePath; 
+            screen.classList.remove('d-none');
+            this.stopAllIntervals();
+        }
+    }
+
+    stopAllIntervals() {
+        for (let i = 1; i < 9999; i++) {
+            window.clearInterval(i);
+        }
+    }
+
     checkBottleCollision() {
-    this.throwableObjects.forEach((bottle, bottleIndex) => {
-        if (bottle.isBroken) return; 
-        this.level.enemies.forEach((enemy, enemyIndex) => {
-            if (bottle.isColliding(enemy)) {
-                if (enemy instanceof Endboss) {
-                    enemy.hit();
-                } else {
-                    this.level.enemies.splice(enemyIndex, 1);
-                }
-                bottle.break(); 
-                setTimeout(() => {
-                    let currentIndex = this.throwableObjects.indexOf(bottle);
-                    if (currentIndex !== -1) {
-                        this.throwableObjects.splice(currentIndex, 1);
+        this.throwableObjects.forEach((bottle, bottleIndex) => {
+            if (bottle.isBroken) return;
+            this.level.enemies.forEach((enemy, enemyIndex) => {
+                if (bottle.isColliding(enemy)) {
+                    if (enemy instanceof Endboss) {
+                        enemy.hit();
+                    } else {
+                        this.level.enemies.splice(enemyIndex, 1);
                     }
-                }, 200);
-            }
+                    bottle.break();
+                    setTimeout(() => {
+                        let currentIndex = this.throwableObjects.indexOf(bottle);
+                        if (currentIndex !== -1) {
+                            this.throwableObjects.splice(currentIndex, 1);
+                        }
+                    }, 200);
+                }
+            });
         });
-    });
-}
+    }
 
     checkThrow() {
         let throwLock = false;
@@ -73,18 +99,18 @@ class World {
         });
     }
 
-    checkObjectsToCollect() {                                                     // 2. Funktion                              Objekt umgeändert
-        this.level.coins.forEach((coin, index) => {                                    // geht alle Coins durch
-            if (this.character.isColliding(coin)) {                               // wenn character mit coin kollidiert
-                this.character.collect(coin);                                       // nimmt münze auf
-                this.coinBar.setPercentage(this.character.collectedCoins)         // passt bottleBar bild an
+    checkObjectsToCollect() {                                                     
+        this.level.coins.forEach((coin, index) => {                                   
+            if (this.character.isColliding(coin)) {                              
+                this.character.collect(coin);                                   
+                this.coinBar.setPercentage(this.character.collectedCoins)         
                 this.level.coins.splice(index, 1)
             }
         });
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
-                this.character.collect(bottle);                                       // nimmt münze auf
-                this.bottleBar.setPercentage(this.character.collectedBottles)         // passt bottleBar bild an
+                this.character.collect(bottle);                                       
+                this.bottleBar.setPercentage(this.character.collectedBottles)         
                 this.level.bottles.splice(index, 1)
             }
         });
@@ -92,9 +118,8 @@ class World {
 
     checkThrowObjects() {
         if (this.character.collectedBottles > 0) {
+            this.character.resetIdleTimer();
             let direction = this.character.otherDirection ? 'left' : 'right';
-
-            // Wir erstellen die Flasche und geben die Richtung mit
             let bottle = new ThrowableObject(this.character.x + 70, this.character.y + 100, direction);
 
             this.throwableObjects.push(bottle);
@@ -115,7 +140,7 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.save()                                         // aktuellen Canvasstand merken.
+        this.ctx.save()                                         
         this.ctx.translate(this.camera_x, 0)
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
@@ -124,7 +149,7 @@ class World {
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addToMap(this.character);
-        this.ctx.restore();                                    // Canvas zurücksetzen
+        this.ctx.restore();                                    
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);

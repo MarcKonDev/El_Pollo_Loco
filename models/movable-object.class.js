@@ -7,7 +7,7 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
 
     collectedCoins = 0;
-    collectedBottles = 0;                                                             // gesammelte Coins startet bei 0
+    collectedBottles = 0;                                                        
 
     applyGravity() {
         setInterval(() => {

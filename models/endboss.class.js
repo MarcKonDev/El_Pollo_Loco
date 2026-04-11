@@ -79,7 +79,7 @@ class Endboss extends MovableObject {
         if (!this.world) return;
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
-            this.handleDeathSink(); // Separate Funktion für den Abgang
+            this.handleDeathSink(); 
         } else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
         } else if (this.world.character.x > 1800 && !this.fightMode) {
@@ -95,9 +95,8 @@ class Endboss extends MovableObject {
 
     handleDeathSink() {
     if (!this.isDeadAlready) {
-        this.isDeadAlready = true; // Markieren, dass der Tod eingeleitet wurde
+        this.isDeadAlready = true; 
         setTimeout(() => {
-            // Ein Intervall starten, das ihn langsam absinken lässt
             setInterval(() => {
                 this.y += 10;
             }, 50);

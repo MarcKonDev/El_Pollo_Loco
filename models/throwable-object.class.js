@@ -44,7 +44,7 @@ class ThrowableObject extends MovableObject {
         this.applyGravity();
         let throwInterval = setInterval(() => {
             if (this.isBroken) {
-                clearInterval(throwInterval); // Stoppt die Vorwärtsbewegung
+                clearInterval(throwInterval); 
             } else {
                 if (direction === 'left') {
                     this.x -= 10;
@@ -57,7 +57,7 @@ class ThrowableObject extends MovableObject {
 
     break() {
         this.isBroken = true;
-        this.speedY = 0; // Stoppt das Fallen
+        this.speedY = 0; 
     }
 
 }
