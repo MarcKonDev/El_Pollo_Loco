@@ -7,7 +7,7 @@ class Endboss extends MovableObject {
     isAttacking = false;
     isReturning = false;
     fightMode = false;
-    energy = 25; 
+    energy = 100; 
     lastHit = 0;
 
 

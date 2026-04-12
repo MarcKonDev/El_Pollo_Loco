@@ -68,6 +68,10 @@ class Character extends MovableObject {
         'img/2_character_pepe/4_hurt/H-43.png'
     ];
 
+    IMAGES_ATTACK = [
+        'img/bombe.png'
+    ];
+
     world;
 
     constructor() {
@@ -78,6 +82,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
+        this.loadImages(this.IMAGES_ATTACK);
         this.applyGravity();
         this.animate();
     }

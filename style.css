@@ -16,15 +16,16 @@ body{
     min-height: 100vh;
     margin: 0;
     font-family: 'Zabras', Arial, Helvetica, sans-serif;
-    position: relative;
+    /* position: relative; */
 }
 
 h1 {
-    position: absolute;
+    /* position: absolute; */
     top: 40px;
     font-size: 64px;
     letter-spacing: 5px;
-    margin: 0;
+    margin-bottom: 10px; /* Hier sind deine 10px Abstand zum Canvas */
+    margin-top: -84px;   /* TRICK: Die halbe Höhe (ca.) der h1 als negativer Margin */
     color: white;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     /* font-family: 'Arial', sans-serif;  */
@@ -102,7 +103,7 @@ canvas {
 }
 
 
-@media (max-height: 700px) {
+@media (max-height: 650px) {
     h1 {
         font-size: 40px;
         top: 10px;
