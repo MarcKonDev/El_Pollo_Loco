@@ -16,19 +16,39 @@ class Chicken extends MovableObject {
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png'
-    ]
+    ];
+
+    IMAGES_DEAD = [
+        'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
+    ];
+
+    // animate() {
+    //     setInterval(() => {
+    //         this.moveLeft();
+    //     }, 1000 / 60);
+
+    //     setInterval(() => {
+    //         this.playAnimation(this.IMAGES_WALKING);
+    //     }, 200);
+    //     this.moveLeft();
+    // }
+
 
     animate() {
         setInterval(() => {
-            this.moveLeft();
+            if (!this.isDead()) { // Nur bewegen, wenn nicht tot
+                this.moveLeft();
+            }
         }, 1000 / 60);
 
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
+            if (this.isDead()) {
+                this.loadImage(this.IMAGES_DEAD[0]); // Zeige totes Bild
+            } else {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
         }, 200);
-        this.moveLeft();
     }
-
 
 
 
