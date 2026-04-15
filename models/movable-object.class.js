@@ -56,12 +56,10 @@ class MovableObject extends DrawableObject {
     collect(object) {
         if (object instanceof Coins && this.collectedCoins < 100) {
             this.collectedCoins += 20;
-            console.log(object);
         }
 
         if (object instanceof Bottle && this.collectedBottles < 100) {
             this.collectedBottles += 20;
-            console.log(object);
         }
     }
 

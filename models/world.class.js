@@ -29,24 +29,13 @@ class World {
         });
     }
 
-    // run() {
-    //     setInterval(() => {
-    //         this.checkCollisions();
-    //         this.checkObjectsToCollect();
-    //         this.checkBottleCollision();
-    //         this.checkGameOver();
-    //     }, 200);
-    // }
-
     run() {
-        // Dieser Intervall ist gut für Spiel-Logik (z.B. Flaschenwurf-Check)
         setInterval(() => {
             this.checkObjectsToCollect();
             this.checkBottleCollision();
             this.checkGameOver();
         }, 200);
 
-        // NEU: Kollisionen viel öfter prüfen (60 mal pro Sekunde)
         setInterval(() => {
             this.checkCollisions();
         }, 1000 / 60);
@@ -65,7 +54,7 @@ class World {
             this.gameStopped = true;
             let screen = document.getElementById('endscreen');
             screen.src = imagePath;
-            screen.classList.remove('d-none');
+            screen.classList.remove('d_none');
             this.stopAllIntervals();
         }
     }
@@ -77,7 +66,7 @@ class World {
     }
 
     checkBottleCollision() {
-        this.throwableObjects.forEach((bottle, bottleIndex) => {
+        this.throwableObjects.forEach((bottle) => {
             if (bottle.isBroken) return;
             this.level.enemies.forEach((enemy, enemyIndex) => {
                 if (bottle.isColliding(enemy)) {
@@ -143,94 +132,45 @@ class World {
 
     }
 
-    // checkCollisions() {
-    //     this.level.enemies.forEach((enemy) => {
-    //         if (this.character.isColliding(enemy) && !this.character.isHurt()) {
-    //             this.character.hit();
-    //             this.statusBar.setPercentage(this.character.energy)
-    //         }
-
-    //     });
-    // }
-
-    // checkCollisions() {
-    //     this.level.enemies.forEach((enemy) => {
-    //         if (this.character.isColliding(enemy) && !enemy.isDead()) {
-    //             // Prüfung: Springt der Charakter gerade auf den Gegner?
-    //             if (this.character.isAboveGround() && this.character.speedY < 0) {
-    //                 this.handleEnemyJumpKill(enemy);
-    //             }
-    //             // Falls nicht von oben und Charakter nicht gerade unverwundbar/verletzt
-    //             else if (!this.character.isHurt()) {
-    //                 this.character.hit();
-    //                 this.statusBar.setPercentage(this.character.energy);
-    //             }
-    //         }
-    //     });
-    // }
-
     checkCollisions() {
-    this.level.enemies.forEach((enemy) => {
-        // Wir prüfen zuerst: Berühren sie sich überhaupt UND lebt der Gegner noch?
-        if (this.character.isColliding(enemy) && !enemy.isDead()) {
-            
-            // Wenn Pepe fällt UND sich in der Luft befindet
-            if (this.character.isAboveGround() && this.character.speedY < 0) {
-                this.handleEnemyJumpKill(enemy);
-            } 
-            // NUR WENN er nicht von oben kommt UND nicht gerade unverwundbar ist
-            else if (!this.character.isHurt()) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
+        this.level.enemies.forEach((enemy) => {
+            // Wir prüfen zuerst: Berühren sie sich überhaupt UND lebt der Gegner noch?
+            if (this.character.isColliding(enemy) && !enemy.isDead()) {
+
+                // Wenn Pepe fällt UND sich in der Luft befindet
+                if (this.character.isAboveGround() && this.character.speedY < 0) {
+                    this.handleEnemyJumpKill(enemy);
+                }
+                // NUR WENN er nicht von oben kommt UND nicht gerade unverwundbar ist
+                else if (!this.character.isHurt()) {
+                    this.character.hit();
+                    this.statusBar.setPercentage(this.character.energy);
+                }
             }
-        }
-    });
-}
-
-    
-
-    // handleEnemyJumpKill(enemy) {
-    //     if (enemy instanceof Endboss) {
-    //         // Optional: Endboss bekommt nur Schaden statt sofort zu sterben
-    //         enemy.hit();
-    //     } else {
-    //         // Normales Huhn stirbt sofort
-    //         enemy.hit(); // Wir setzen energy auf 0
-    //         // Kleiner Rückstoß-Hüpfer für Pepe nach dem Kill
-    //         this.character.jump();
-
-    //         // Gegner nach kurzer Zeit entfernen (damit man die Todesanimation noch sieht)
-    //         setTimeout(() => {
-    //             let index = this.level.enemies.indexOf(enemy);
-    //             if (index !== -1) {
-    //                 this.level.enemies.splice(index, 1);
-    //             }
-    //         }, 500); // 500ms Verzögerung
-    //     }
-    // }
-
+        });
+    }
 
     handleEnemyJumpKill(enemy) {
-    if (enemy instanceof Endboss) {
-        enemy.hit();
-    } else {
-        // WICHTIG: Energie direkt auf 0 setzen statt nur hit()
-        enemy.energy = 0; 
-        
-        // Pepe springt zurück
-        this.character.speedY = 15;
+        if (enemy instanceof Endboss) {
+            enemy.hit();
+        } else {
+            // WICHTIG: Energie direkt auf 0 setzen statt nur hit()
+            enemy.energy = 0;
 
-        // Das Bild sofort auf "tot" setzen (optional, aber sicherer)
-        enemy.loadImage(enemy.IMAGES_DEAD[0]);
+            // Pepe springt zurück
+            this.character.speedY = 15;
 
-        setTimeout(() => {
-            let index = this.level.enemies.indexOf(enemy);
-            if (index !== -1) {
-                this.level.enemies.splice(index, 1);
-            }
-        }, 500);
+            // Das Bild sofort auf "tot" setzen (optional, aber sicherer)
+            enemy.loadImage(enemy.IMAGES_DEAD[0]);
+
+            setTimeout(() => {
+                let index = this.level.enemies.indexOf(enemy);
+                if (index !== -1) {
+                    this.level.enemies.splice(index, 1);
+                }
+            }, 500);
+        }
     }
-}
 
 
 

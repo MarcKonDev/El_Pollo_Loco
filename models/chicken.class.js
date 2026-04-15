@@ -22,18 +22,6 @@ class Chicken extends MovableObject {
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ];
 
-    // animate() {
-    //     setInterval(() => {
-    //         this.moveLeft();
-    //     }, 1000 / 60);
-
-    //     setInterval(() => {
-    //         this.playAnimation(this.IMAGES_WALKING);
-    //     }, 200);
-    //     this.moveLeft();
-    // }
-
-
     animate() {
         setInterval(() => {
             if (!this.isDead()) { // Nur bewegen, wenn nicht tot
@@ -49,7 +37,4 @@ class Chicken extends MovableObject {
             }
         }, 200);
     }
-
-
-
 }

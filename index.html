@@ -26,11 +26,15 @@
     <script src="./js/game.js"></script>
 </head>
 
-<body onload="init()">
+<body>
 
     <h1>El pollo loco</h1>
 
     <div id="fullscreen">
+        <div id="startscreen-container">
+            <img id="startscreen" src="./img/Start.png" alt="Start Screen">
+            <div class="start-info" onclick="startGame()">Klicke zum Starten</div>
+        </div>
         <button id="fullscreen-btn" onclick="fullscreen()">
             <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M7 3H3v4"></path>
@@ -40,7 +44,7 @@
             </svg>
         </button>
         <canvas id="canvas" width="720" height="480"></canvas>
-        <img id="endscreen" class="endscreen d-none" src="">
+        <img id="endscreen" class="endscreen d_none" src="">
     </div>
 </body>
 
