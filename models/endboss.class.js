@@ -7,8 +7,15 @@ class Endboss extends MovableObject {
     isAttacking = false;
     isReturning = false;
     fightMode = false;
-    energy = 100; 
+    energy = 100;
     lastHit = 0;
+    world;
+    offset = {
+        top: 70,   
+        bottom: 25,  
+        left: 30,    
+        right: 30    
+    };
 
 
     IMAGES_WALKING = [
@@ -53,7 +60,8 @@ class Endboss extends MovableObject {
     ];
 
     constructor() {
-        super().loadImage(this.IMAGES_WALKING[0]);
+        super();
+        this.loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_ATTACK);
@@ -72,14 +80,14 @@ class Endboss extends MovableObject {
             if (this.fightMode && !this.isAttacking && !this.isReturning) {
                 this.startAttack();
             }
-        }, 3000);
+        }, 2000);
     }
 
     handleBossLogic() {
         if (!this.world) return;
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
-            this.handleDeathSink(); 
+            this.handleDeathSink();
         } else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
         } else if (this.world.character.x > 1800 && !this.fightMode) {
@@ -94,15 +102,15 @@ class Endboss extends MovableObject {
     }
 
     handleDeathSink() {
-    if (!this.isDeadAlready) {
-        this.isDeadAlready = true; 
-        setTimeout(() => {
-            setInterval(() => {
-                this.y += 10;
-            }, 50);
-        }, 1000);
+        if (!this.isDeadAlready) {
+            this.isDeadAlready = true;
+            setTimeout(() => {
+                setInterval(() => {
+                    this.y += 10;
+                }, 50);
+            }, 1000);
+        }
     }
-}
 
     moveTowardsStartPostion() {
         this.playAnimation(this.IMAGES_WALKING);
@@ -119,19 +127,18 @@ class Endboss extends MovableObject {
 
     performAttack() {
         this.playAnimation(this.IMAGES_ATTACK);
-        this.x -= 40; 
+        this.x -= 40;
         if (this.x <= 2200) {
             this.isAttacking = false;
-            this.isReturning = true; 
+            this.isReturning = true;
         }
     }
 
     returnToPosition() {
         this.playAnimation(this.IMAGES_WALKING);
-        this.x += 10; 
+        this.x += 20;
         if (this.x >= 2600) {
-            this.isReturning = false; 
+            this.isReturning = false;
         }
     }
 }
-

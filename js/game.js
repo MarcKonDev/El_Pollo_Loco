@@ -5,6 +5,13 @@ let keyboard = new Keyboard();
 
 function startGame() {
     document.getElementById('startscreen-container').classList.add('d_none');
+    initLevel();
+    init(); 
+}
+
+function restartGame() {
+    document.getElementById('endscreen_container').classList.add('d_none');
+    initLevel();
     init(); 
 }
 

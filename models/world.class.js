@@ -52,17 +52,21 @@ class World {
     showEndscreen(imagePath) {
         if (!this.gameStopped) {
             this.gameStopped = true;
-            let screen = document.getElementById('endscreen');
-            screen.src = imagePath;
-            screen.classList.remove('d_none');
-            this.stopAllIntervals();
+            setTimeout(() => {
+                let screen = document.getElementById('endscreen');
+                screen.src = imagePath;
+                document.getElementById('endscreen_container').classList.remove('d_none');
+                this.stopAllIntervals();
+            }, 500);
         }
     }
 
     stopAllIntervals() {
-        for (let i = 1; i < 9999; i++) {
-            window.clearInterval(i);
-        }
+        setTimeout(() => {
+            for (let i = 1; i < 9999; i++) {
+                window.clearInterval(i);
+            }
+        }, 500);
     }
 
     checkBottleCollision() {
@@ -134,14 +138,10 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            // Wir prüfen zuerst: Berühren sie sich überhaupt UND lebt der Gegner noch?
             if (this.character.isColliding(enemy) && !enemy.isDead()) {
-
-                // Wenn Pepe fällt UND sich in der Luft befindet
                 if (this.character.isAboveGround() && this.character.speedY < 0) {
                     this.handleEnemyJumpKill(enemy);
                 }
-                // NUR WENN er nicht von oben kommt UND nicht gerade unverwundbar ist
                 else if (!this.character.isHurt()) {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
@@ -154,15 +154,10 @@ class World {
         if (enemy instanceof Endboss) {
             enemy.hit();
         } else {
-            // WICHTIG: Energie direkt auf 0 setzen statt nur hit()
             enemy.energy = 0;
-
-            // Pepe springt zurück
             this.character.speedY = 15;
-
-            // Das Bild sofort auf "tot" setzen (optional, aber sicherer)
+            // this.character.lastHit = new Date().getTime();
             enemy.loadImage(enemy.IMAGES_DEAD[0]);
-
             setTimeout(() => {
                 let index = this.level.enemies.indexOf(enemy);
                 if (index !== -1) {
@@ -171,11 +166,6 @@ class World {
             }, 500);
         }
     }
-
-
-
-
-
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -230,4 +220,3 @@ class World {
         this.ctx.restore();
     }
 }
-

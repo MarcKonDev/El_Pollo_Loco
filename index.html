@@ -11,24 +11,25 @@
     <script src="./models/background-object.class.js"></script>
     <script src="./models/character.class.js"></script>
     <script src="./models/chicken.class.js"></script>
+    <script src="./models/small-chicken.class.js"></script>
     <script src="./models/coin.class.js"></script>
     <script src="./models/bottle.class.js"></script>
     <script src="./models/bottle-bar.class.js"></script>
     <script src="./models/coin-bar.class.js"></script>
     <script src="./models/cloud.class.js"></script>
     <script src="./models/status-bar.class.js"></script>
+    <script src="levels/level1.js"></script>
     <script src="./models/world.class.js"></script>
     <script src="./models/keyboard.class.js"></script>
     <script src="./models/level.class.js"></script>
     <script src="./models/throwable-object.class.js"></script>
     <script src="./models/endboss.class.js"></script>
-    <script src="levels/level1.js"></script>
     <script src="./js/game.js"></script>
 </head>
 
 <body>
 
-    <h1>El pollo loco</h1>
+    <h1>El Pollo Loco</h1>
 
     <div id="fullscreen">
         <div id="startscreen-container">
@@ -36,7 +37,8 @@
             <div class="start-info" onclick="startGame()">Klicke zum Starten</div>
         </div>
         <button id="fullscreen-btn" onclick="fullscreen()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
                 <path d="M7 3H3v4"></path>
                 <path d="M3 17v4h4"></path>
                 <path d="M17 21h4v-4"></path>
@@ -44,7 +46,10 @@
             </svg>
         </button>
         <canvas id="canvas" width="720" height="480"></canvas>
-        <img id="endscreen" class="endscreen d_none" src="">
+        <div id="endscreen_container" class="d_none">
+            <img id="endscreen" class="endscreen" src="">
+            <div id="restart" class="start-info" onclick="restartGame()">Neu starten!</div>
+        </div>
     </div>
 </body>
 
