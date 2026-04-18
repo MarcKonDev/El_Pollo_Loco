@@ -4,6 +4,8 @@ class World {
     statusBar = new StatusBar();
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
+    endbossBar = new EndbossBar();
+    endboss = null;
     level = level1;
     canvas;
     ctx;
@@ -27,6 +29,7 @@ class World {
         this.level.enemies.forEach(enemy => {
             enemy.world = this;
         });
+        this.endboss = this.level.enemies.find(e => e instanceof Endboss);
     }
 
     run() {
@@ -76,6 +79,7 @@ class World {
                 if (bottle.isColliding(enemy)) {
                     if (enemy instanceof Endboss) {
                         enemy.hit();
+                        this.endbossBar.setPercentage(enemy.energy);
                     } else {
                         this.level.enemies.splice(enemyIndex, 1);
                     }
@@ -153,6 +157,7 @@ class World {
     handleEnemyJumpKill(enemy) {
         if (enemy instanceof Endboss) {
             enemy.hit();
+            this.endbossBar.setPercentage(enemy.energy);
         } else {
             enemy.energy = 0;
             this.character.speedY = 15;
@@ -183,6 +188,10 @@ class World {
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
 
+        if (this.endboss && this.endboss.BossBarAnimation) {
+            this.endbossBar.updateSize(); // Die Bar wächst Stück für Stück
+            this.addToMap(this.endbossBar);
+        }
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
@@ -201,7 +210,7 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
+        // mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

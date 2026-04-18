@@ -15,6 +15,7 @@
     <script src="./models/coin.class.js"></script>
     <script src="./models/bottle.class.js"></script>
     <script src="./models/bottle-bar.class.js"></script>
+    <script src="./models/endboss-bar.class.js"></script>
     <script src="./models/coin-bar.class.js"></script>
     <script src="./models/cloud.class.js"></script>
     <script src="./models/status-bar.class.js"></script>
@@ -29,15 +30,31 @@
 
 <body>
 
-    <h1>El Pollo Loco</h1>
+    <h1 id="game_title">El Pollo Loco</h1>
 
     <div id="fullscreen">
         <div id="startscreen-container">
             <img id="startscreen" src="./img/Start.png" alt="Start Screen">
-            <div class="start-info" onclick="startGame()">Klicke zum Starten</div>
+            <div class="start-info" onclick="startGame()">Start Game!</div>
         </div>
+        <button id="music_btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+        </button>
+        <button id="info_btn" onclick="toggleInfo()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="8"></line>
+                <polyline points="12 12 12 16"></polyline>
+            </svg>
+        </button>
         <button id="fullscreen-btn" onclick="fullscreen()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+            <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round"
                 stroke-linejoin="round">
                 <path d="M7 3H3v4"></path>
                 <path d="M3 17v4h4"></path>
@@ -48,7 +65,50 @@
         <canvas id="canvas" width="720" height="480"></canvas>
         <div id="endscreen_container" class="d_none">
             <img id="endscreen" class="endscreen" src="">
-            <div id="restart" class="start-info" onclick="restartGame()">Neu starten!</div>
+            <button id="restart_btn" onclick="restartGame()">Restart</button>
+            <button id="home_btn" onclick="backToHomeScreen()">Home</button>
+        </div>
+
+    </div>
+    <div id="overlay" class="d_none">
+        <div class="info_card"><button class="close-x" onclick="toggleInfo()">X</button>
+            <h1 id="overlay_headline">Anleitung</h1>
+            <p>Hier findest du die wichtigsten Steuerungen und Ziele, damit du direkt loslegen kannst.</p>
+            <div class="grid_container">
+                <div class="info_box">
+                    <h3>Steuerung Desktop</h3>
+                    <ol>
+                        <li>← / → bewegen Pepe nach links und rechts.</li>
+                        <li>Leertaste oder ↑ zum Springen.</li>
+                        <li>D wirft eine eingesammelte Flasche.</li>
+                        <li>Enter startet das Spiel.</li>
+                    </ol>
+                </div>
+                <div class="info_box">
+                    <h3>Steuerung Mobile</h3>
+                    <ol>
+                        <li>Links unten findest du Springen, Links und Rechts.</li>
+                        <li>Rechts unten wirfst du mit dem THROW-Button Flaschen.</li>
+                        <li>Im Hochformat erscheint ein Hinweis zum Drehen ins Querformat.</li>
+                    </ol>
+                </div>
+                <div class="info_box">
+                    <h3>Dein Ziel</h3>
+                    <ol>
+                        <li>Sammle Flaschen und Münzen ein.</li>
+                        <li>Besiege große und kleine Hühner per Sprung oder mit einer Flasche.</li>
+                        <li>Den Endboss besiegst du zuverlässig mit Flaschenwürfen.</li>
+                    </ol>
+                </div>
+                <div class="info_box">
+                    <h3>Wichtige Hinweise</h3>
+                    <ol>
+                        <li>Du kannst maximal 5 Flaschen gleichzeitig tragen.</li>
+                        <li>Der Sound bleibt nach dem Umschalten gespeichert.</li>
+                        <li>Nach Sieg oder Niederlage kannst du NEUSTART oder HOME wählen.</li>
+                    </ol>
+                </div>
+            </div>
         </div>
     </div>
 </body>

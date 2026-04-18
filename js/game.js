@@ -2,6 +2,10 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
+function backToHomeScreen() {
+    document.getElementById('endscreen_container').classList.add('d_none')
+    document.getElementById('startscreen-container').classList.remove('d_none')
+}
 
 function startGame() {
     document.getElementById('startscreen-container').classList.add('d_none');
@@ -103,4 +107,10 @@ function closeFullscreen() {
     } else if (document.msExitFullscreen) { 
         document.msExitFullscreen();
     }
+}
+
+function toggleInfo() {
+    let info = document.getElementById('overlay');
+    info.classList.toggle('d_none');
+    
 }

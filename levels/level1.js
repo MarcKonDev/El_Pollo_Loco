@@ -45,27 +45,27 @@ function initLevel() {
 
         ],
         [
-            new Coins(),
-            new Coins(),
-            new Coins(),
-            new Coins(),
-            new Coins(),
-            new Coins(),
-            new Coins(),
-            new Coins(),
-            new Coins(),
-            new Coins()
+            new Coins(400, 300),
+            new Coins(850, 200),
+            new Coins(900, 180),
+            new Coins(950, 160),
+            new Coins(1000, 160),
+            new Coins(1050, 180),
+            new Coins(2250, 200),
+            new Coins(2300, 200),
+            new Coins(2350, 200),
+            new Coins(2400, 200)
         ],
         [
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle()
+            new Bottle(500, 360),
+            new Bottle(560, 360),
+            new Bottle(600, 360),
+            new Bottle(900, 360),
+            new Bottle(1000, 360),
+            new Bottle(1400, 360),
+            new Bottle(1600, 360),
+            new Bottle(2100, 360),
+            new Bottle(2500, 360)
         ],
     );
 }

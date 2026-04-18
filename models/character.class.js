@@ -113,7 +113,7 @@ class Character extends MovableObject {
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
             }
-            this.world.camera_x = Math.max(-this.x + 100, -2150);
+            this.world.camera_x = Math.max(-this.x + 160, -2150);
         }, 1000 / 60);
 
 

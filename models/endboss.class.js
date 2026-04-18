@@ -11,11 +11,12 @@ class Endboss extends MovableObject {
     lastHit = 0;
     world;
     offset = {
-        top: 70,   
-        bottom: 25,  
-        left: 30,    
-        right: 30    
+        top: 70,
+        bottom: 25,
+        left: 30,
+        right: 30
     };
+    BossBarAnimation = false;
 
 
     IMAGES_WALKING = [
@@ -67,7 +68,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 2800;
+        this.x = 2750;
         this.animate();
     }
 
@@ -80,7 +81,7 @@ class Endboss extends MovableObject {
             if (this.fightMode && !this.isAttacking && !this.isReturning) {
                 this.startAttack();
             }
-        }, 2000);
+        }, 1500);
     }
 
     handleBossLogic() {
@@ -92,6 +93,7 @@ class Endboss extends MovableObject {
             this.playAnimation(this.IMAGES_HURT);
         } else if (this.world.character.x > 1800 && !this.fightMode) {
             this.moveTowardsStartPostion();
+            this.startBossBar();
         } else if (this.isAttacking) {
             this.performAttack();
         } else if (this.isReturning) {
@@ -127,7 +129,7 @@ class Endboss extends MovableObject {
 
     performAttack() {
         this.playAnimation(this.IMAGES_ATTACK);
-        this.x -= 40;
+        this.x -= 60;
         if (this.x <= 2200) {
             this.isAttacking = false;
             this.isReturning = true;
@@ -136,9 +138,17 @@ class Endboss extends MovableObject {
 
     returnToPosition() {
         this.playAnimation(this.IMAGES_WALKING);
-        this.x += 20;
+        this.x += 30;
         if (this.x >= 2600) {
             this.isReturning = false;
+        }
+    }
+    startBossBar() {
+        if (!this.barIsActiv) {
+            this.barIsActiv = true;
+            setTimeout(() => {
+                this.BossBarAnimation = true
+            }, 500);
         }
     }
 }
