@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <script src="./models/audio.class.js"></script>
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/movable-object.class.js"></script>
     <script src="./models/background-object.class.js"></script>
@@ -37,7 +38,7 @@
             <img id="startscreen" src="./img/Start.png" alt="Start Screen">
             <div class="start-info" onclick="startGame()">Start Game!</div>
         </div>
-        <button id="music_btn">
+        <button id="music_btn" onclick="toggleMute()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                 stroke-linejoin="round">
                 <path d="M11 5L6 9H2v6h4l5 4V5z"></path>

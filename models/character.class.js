@@ -7,10 +7,10 @@ class Character extends MovableObject {
     lastMovementTime = 5;
     world;
     offset = {
-        top: 110,    
-        bottom: 10,  
-        left: 30,    
-        right: 35    
+        top: 110,
+        bottom: 10,
+        left: 30,
+        right: 35
     };
 
     IMAGES_IDLE = [
@@ -112,6 +112,7 @@ class Character extends MovableObject {
             }
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
+                this.world.audio.play('jump');
             }
             this.world.camera_x = Math.max(-this.x + 160, -2150);
         }, 1000 / 60);
@@ -121,7 +122,8 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
                 if (this.currentImage >= this.IMAGES_DEAD.length) {
-                    this.currentImage = this.IMAGES_DEAD.length - 1;}
+                    this.currentImage = this.IMAGES_DEAD.length - 1;
+                }
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
                 this.resetIdleTimer();
@@ -130,9 +132,24 @@ class Character extends MovableObject {
             } else {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                     this.playAnimation(this.IMAGES_WALKING);
-                } else {this.handleIdleAnimations();}
+                } else { this.handleIdleAnimations(); }
             }
         }, 100);
+
+
+        // In deiner character.class.js innerhalb von animate()
+        setInterval(() => {
+            // 1. Prüfen, ob eine Richtungstaste gedrückt wird UND Pepe auf dem Boden ist
+            let isWalking = (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround();
+
+            if (isWalking) {
+                this.world.audio.playLoop('walk'); // Sound starten/halten
+            } else {
+                this.world.audio.stop('walk');    // Sound sofort stoppen
+            }
+
+            // ... dein restlicher Bewegungs-Code (moveRight, moveLeft, etc.)
+        }, 1000 / 60);
     }
 
     resetIdleTimer() {

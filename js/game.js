@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let isGameMuted = false; 
 
 function backToHomeScreen() {
     document.getElementById('endscreen_container').classList.add('d_none')
@@ -14,6 +15,9 @@ function startGame() {
 }
 
 function restartGame() {
+    if (world && world.audio) {
+        world.audio.stopAll();
+    }
     document.getElementById('endscreen_container').classList.add('d_none');
     initLevel();
     init(); 
@@ -113,4 +117,22 @@ function toggleInfo() {
     let info = document.getElementById('overlay');
     info.classList.toggle('d_none');
     
+}
+
+function toggleMute() {
+    isGameMuted = !isGameMuted; 
+    if (world && world.audio) {
+        world.audio.muteAll(isGameMuted);
+    }
+        updateMuteButton();
+    document.getElementById('music_btn').blur();
+}
+
+function updateMuteButton() {
+    let btn = document.getElementById('music_btn');
+    if (isGameMuted) {
+        btn.style.opacity = "0.4"; 
+    } else {
+        btn.style.opacity = "1";
+    }
 }

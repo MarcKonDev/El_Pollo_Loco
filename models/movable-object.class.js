@@ -11,6 +11,7 @@ class MovableObject extends DrawableObject {
         right: 0,
         bottom: 0
     };
+    world;
 
     collectedCoins = 0;
     collectedBottles = 0;
@@ -41,10 +42,12 @@ class MovableObject extends DrawableObject {
 
     moveRight() {
         this.x += this.speed;
+        // this.world.audio.play('walk');
     };
 
     moveLeft() {
         this.x -= this.speed;
+        // this.world.audio.play('walk');
     }
 
     jump() {
@@ -68,10 +71,12 @@ class MovableObject extends DrawableObject {
     collect(object) {
         if (object instanceof Coins && this.collectedCoins < 200) {
             this.collectedCoins += 20;
+            // this.world.audio.play('bottle_collect');
         }
 
         if (object instanceof Bottle && this.collectedBottles < 100) {
             this.collectedBottles += 20;
+            // this.world.audio.play('bottle_collect');
         }
     }
 
