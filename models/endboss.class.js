@@ -74,10 +74,12 @@ class Endboss extends MovableObject {
 
     animate() {
         setInterval(() => {
+            if (this.world && this.world.gamePaused) return;
             this.handleBossLogic();
         }, 200);
 
         setInterval(() => {
+            if (this.world && this.world.gamePaused) return;
             if (this.fightMode && !this.isAttacking && !this.isReturning) {
                 this.startAttack();
             }

@@ -18,6 +18,7 @@ class MovableObject extends DrawableObject {
 
     applyGravity() {
         setInterval(() => {
+            if (this.world && this.world.gamePaused) return;
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY
                 this.speedY -= this.acceleration;
@@ -42,24 +43,15 @@ class MovableObject extends DrawableObject {
 
     moveRight() {
         this.x += this.speed;
-        // this.world.audio.play('walk');
     };
 
     moveLeft() {
         this.x -= this.speed;
-        // this.world.audio.play('walk');
     }
 
     jump() {
         this.speedY = 30;
     }
-
-    // isColliding(mo) {
-    //     return this.x + this.width > mo.x &&
-    //         this.y + this.height > mo.y &&
-    //         this.x < mo.x + mo.width &&
-    //         this.y < mo.y + mo.height
-    // }
 
     isColliding(mo) {
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
@@ -71,12 +63,10 @@ class MovableObject extends DrawableObject {
     collect(object) {
         if (object instanceof Coins && this.collectedCoins < 200) {
             this.collectedCoins += 20;
-            // this.world.audio.play('bottle_collect');
         }
 
         if (object instanceof Bottle && this.collectedBottles < 100) {
             this.collectedBottles += 20;
-            // this.world.audio.play('bottle_collect');
         }
     }
 

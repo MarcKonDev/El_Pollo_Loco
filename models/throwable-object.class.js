@@ -32,6 +32,7 @@ class ThrowableObject extends MovableObject {
 
     animate() {
         setInterval(() => {
+            if (this.world && this.world.gamePaused) return;
             if (this.isBroken) {
                 this.playAnimation(this.IMAGES_SPLASH);
             } else {
@@ -44,6 +45,7 @@ class ThrowableObject extends MovableObject {
         this.speedY = 30;
         this.applyGravity();
         let throwInterval = setInterval(() => {
+            if (this.world && this.world.gamePaused) return;
             if (this.isBroken) {
                 clearInterval(throwInterval); 
             } else {

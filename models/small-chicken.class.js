@@ -31,12 +31,14 @@ class SmallChicken extends MovableObject {
 
     animate() {
         setInterval(() => {
+            if (this.world && this.world.gamePaused) return;
             if (!this.isDead()) {
                 this.moveLeft();
             }
         }, 1000 / 60);
 
         setInterval(() => {
+            if (this.world && this.world.gamePaused) return;
             if (this.isDead()) {
                 this.loadImage(this.IMAGES_DEAD[0])
             } else {

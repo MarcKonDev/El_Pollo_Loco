@@ -39,12 +39,14 @@ class World {
 
     run() {
         setInterval(() => {
+            if (this.gamePaused) return; 
             this.checkObjectsToCollect();
             this.checkBottleCollision();
             this.checkGameOver();
         }, 200);
 
         setInterval(() => {
+            if (this.gamePaused) return; 
             this.checkCollisions();
         }, 1000 / 60);
     }
@@ -52,7 +54,9 @@ class World {
     checkGameOver() {
         if (this.character.isDead()) {
             this.showEndscreen('img/You won, you lost/Game Over.png');
+            document.getElementById('pause_btn').classList.add('d_none');
         } else if (this.level.enemies.find(e => e instanceof Endboss)?.isDead()) {
+            document.getElementById('pause_btn').classList.add('d_none');
             this.showEndscreen('img/You won, you lost/You Win A.png');
         }
     }
@@ -178,7 +182,6 @@ class World {
             this.character.speedY = 15;
             this.audio.play('jump_kill');
             this.audio.play('chicken_kill');
-            // this.character.lastHit = new Date().getTime();
             enemy.loadImage(enemy.IMAGES_DEAD[0]);
             setTimeout(() => {
                 let index = this.level.enemies.indexOf(enemy);
@@ -190,6 +193,7 @@ class World {
     }
 
     draw() {
+        if (this.gamePaused) return; 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.save()
         this.ctx.translate(this.camera_x, 0)
@@ -206,7 +210,7 @@ class World {
         this.addToMap(this.bottleBar);
 
         if (this.endboss && this.endboss.BossBarAnimation) {
-            this.endbossBar.updateSize(); // Die Bar wächst Stück für Stück
+            this.endbossBar.updateSize(); 
             this.addToMap(this.endbossBar);
         }
         let self = this;
@@ -227,7 +231,6 @@ class World {
         }
 
         mo.draw(this.ctx);
-        // mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
