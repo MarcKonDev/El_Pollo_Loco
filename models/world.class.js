@@ -106,6 +106,7 @@ class World {
         this.showEndscreen(imagePath);
         document.getElementById('pause_btn').classList.add('d_none');
         document.getElementById('control_btns').classList.add('d_none');
+        document.getElementById('impressum_btn').classList.remove('d_none');
     }
 
     /**

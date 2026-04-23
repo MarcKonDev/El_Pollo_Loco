@@ -7,8 +7,10 @@ let world;
 /** @type {Keyboard} */
 let keyboard = new Keyboard();
 
-/** @type {boolean} - Global state to track if the game is muted */
-let isGameMuted = false;
+// /** @type {boolean} - Global state to track if the game is muted */
+// let isGameMuted = false;
+/** @type {boolean} - Global state to track if the game is muted, loaded from localStorage */
+let isGameMuted = localStorage.getItem('isGameMuted') === 'true';
 
 /**
  * Returns the player from the end screen to the main start screen.
@@ -24,7 +26,8 @@ function backToHomeScreen() {
  * to display mobile controls if necessary.
  */
 function startGame() {
-    
+    document.getElementById('impressum_btn').classList.add('d_none');
+
     if (world && world.audio) {
         world.audio.stopAll();
     }
@@ -45,6 +48,7 @@ function restartGame() {
     if (world && world.audio) {
         world.audio.stopAll();
     }
+    document.getElementById('impressum_btn').classList.add('d_none');
     document.getElementById('endscreen_container').classList.add('d_none');
     document.getElementById('control_btns').classList.remove('d_none');
     initLevel();
@@ -89,6 +93,9 @@ function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     document.getElementById('pause_btn').classList.remove('d_none')
+    if (isGameMuted) {
+        world.audio.muteAll(true);
+    }
     if (isGameMuted) {
         world.audio.muteAll(true);
     }
@@ -169,7 +176,7 @@ function toggleInfo() {
 }
 
 /**
- * Global event listener to close the info overlay when the Escape key is pressed.
+ * Global event listener to close the info/impressum overlay when the Escape key is pressed.
  */
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
@@ -178,13 +185,37 @@ document.addEventListener('keydown', (event) => {
             info.classList.add('d_none');
         }
     }
+    if (event.key === 'Escape') {
+        let info = document.getElementById('impressum-overlay');
+        if (!info.classList.contains('d_none')) {
+            info.classList.add('d_none');
+        }
+    }
 })
+
+
+/**
+ * Closes the impressum overlay when clicking on the background.
+ */
+document.addEventListener('click', (event) => {
+    const impressumOverlay = document.getElementById('impressum-overlay');
+    if (event.target === impressumOverlay) {
+        toggleImpressum();
+    }
+
+    const infoOverlay = document.getElementById('overlay');
+    if (event.target === infoOverlay) {
+        toggleInfo();
+    }
+});
+
 
 /**
  * Toggles the game audio between muted and unmuted states.
  */
 function toggleMute() {
     isGameMuted = !isGameMuted;
+    localStorage.setItem('isGameMuted', isGameMuted);
     if (world && world.audio) {
         world.audio.muteAll(isGameMuted);
     }
@@ -275,4 +306,22 @@ function bindUiEvents() {
  */
 window.addEventListener('load', () => {
     bindMobileEvents();
+    updateMuteButton();
 });
+
+/**
+ * Toggles the visibility of the impressum overlay.
+ */
+function toggleImpressum() {
+    let impressum = document.getElementById('impressum-overlay');
+    impressum.classList.toggle('d_none');
+}
+
+/**
+ * Add it to your global Escape listener so it closes easily.
+ */
+// document.addEventListener('keydown', (event) => {
+//     if (event.key === 'Escape') {
+//         document.getElementById('impressum-overlay').classList.add('d_none');
+//     }
+// });

@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <title>Document</title>
+    <title>El Pollo Loco</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="./img/8_coin/coin_2.png">
 
@@ -43,7 +43,7 @@
     <div id="fullscreen">
         <div id="startscreen-container">
             <img id="startscreen" src="./img/Start.png" alt="Start Screen">
-            <div class="start-info" onclick="startGame()">Start Game!</div>
+            <div class="start-info" onclick="startGame()">Start Game!</div>control_btns
         </div>
         <button id="music_btn" onclick="toggleMute()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -161,6 +161,22 @@
                         </ol>
                     </div>
                 </div>
+            </div>
+        </div>
+        <button id="impressum_btn" class="" onclick="toggleImpressum()">Impressum</button>
+        <div id="impressum-overlay" class="d_none overlay-style">
+            <div class="impressum-content">
+                <span onclick="toggleImpressum()" class="close-btn">X</span>
+                <h2>Impressum</h2>
+                <p><strong>Operator:</strong> Marc</p>
+                <p>Musterstraße 1</p>
+                <p>12345 Musterstadt</p>
+                <hr>
+                <p><strong>Contact:</strong></p>
+                <p>Email: Marc.Mustermann@web.de</p>
+                <p>Telefon: 0123456789</p>
+                <hr>
+                <p><strong>Disclaimer:</strong> All graphics and sounds are used for educational purposes.</p>
             </div>
         </div>
     </div>
