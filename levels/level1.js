@@ -1,5 +1,13 @@
+/**
+ * @type {Level}
+ * Global variable that holds the primary level instance.
+ */
 let level1;
 
+/**
+ * Initializes the first level of the game by instantiating the Level class 
+ * with various game entities including enemies, clouds, background objects, coins, and bottles.
+ */
 function initLevel() {
 
     level1 = new Level(

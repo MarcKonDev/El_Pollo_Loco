@@ -1,6 +1,14 @@
+/**
+ * Class representing the audio management system for the game.
+ * Handles sound effects, background music, looping, and volume control.
+ */
 class Audios {
 
+    /** @type {boolean} - Indicates whether all game sounds are currently muted. */
     isMuted = false;
+
+    /** * @type {Object<string, HTMLAudioElement>} - A collection of all audio objects used in the game.
+     */
     SOUNDS = {
         background: new Audio('audio/El_Pollo_Loco.mp3'),               
         coin: new Audio('audio/collect_coin.mp3'),                      
@@ -15,9 +23,16 @@ class Audios {
         hurt_endboss: new Audio('audio/hurt_endboss.mp3')
     };
 
+    /**
+     * Creates an instance of the Audios class.
+     */
     constructor() {
     }
 
+    /**
+     * Configures and starts the background music.
+     * @param {string} soundName - The key of the sound in the SOUNDS object.
+     */
     setupBackgroundMusic(soundName) {
         let song = this.SOUNDS[soundName];
         if (song) {
@@ -28,6 +43,10 @@ class Audios {
         }
     }
 
+    /**
+     * Plays a specific sound in a continuous loop.
+     * @param {string} soundName - The key of the sound in the SOUNDS object.
+     */
     playLoop(soundName) {
         let sound = this.SOUNDS[soundName];
         if (sound) {
@@ -38,6 +57,10 @@ class Audios {
         }
     }
 
+    /**
+     * Stops a sound and resets its playback position to the beginning.
+     * @param {string} soundName - The key of the sound in the SOUNDS object.
+     */
     stop(soundName) {
         let sound = this.SOUNDS[soundName];
         if (sound) {
@@ -46,6 +69,10 @@ class Audios {
         }
     }
 
+    /**
+     * Plays a sound from the beginning.
+     * @param {string} soundName - The key of the sound in the SOUNDS object.
+     */
     play(soundName) {
         let sound = this.SOUNDS[soundName];
         if (sound) {
@@ -54,12 +81,19 @@ class Audios {
         }
     }
 
+    /**
+     * Pauses a specific sound.
+     * @param {string} soundName - The key of the sound in the SOUNDS object.
+     */
     stop(soundName) {
         if (this.SOUNDS[soundName]) {
             this.SOUNDS[soundName].pause();
         }
     }
     
+    /**
+     * Stops all sounds in the SOUNDS collection and resets their playback position.
+     */
     stopAll() {
         Object.keys(this.SOUNDS).forEach(key => {
             this.SOUNDS[key].pause();
@@ -67,6 +101,10 @@ class Audios {
         });
     }
 
+    /**
+     * Mutes or unmutes all sounds in the SOUNDS collection.
+     * @param {boolean} status - True to mute all sounds, false to unmute.
+     */
     muteAll(status) {
         this.isMuted = status;
         Object.keys(this.SOUNDS).forEach(key => {
@@ -74,4 +112,3 @@ class Audios {
         });
     }
 }
-

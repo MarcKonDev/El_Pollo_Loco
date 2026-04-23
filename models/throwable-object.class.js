@@ -1,5 +1,11 @@
+/**
+ * Represents an object that can be thrown by the character (e.g., a salsa bottle).
+ * Handles physics for throwing, rotation animations, and collision-based "breaking" effects.
+ * @extends MovableObject
+ */
 class ThrowableObject extends MovableObject {
 
+    /** @type {string[]} - Array of image paths for the bottle's spinning animation while in the air. */
     IMAGES_SPIN = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -7,6 +13,7 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png'
     ];
 
+    /** @type {string[]} - Array of image paths for the splash animation when the bottle hits an object. */
     IMAGES_SPLASH = [
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png',
@@ -17,6 +24,12 @@ class ThrowableObject extends MovableObject {
     ];
 
 
+    /**
+     * Creates an instance of ThrowableObject.
+     * @param {number} x - The starting horizontal position.
+     * @param {number} y - The starting vertical position.
+     * @param {string} direction - The direction of the throw ('left' or 'right').
+     */
     constructor(x, y, direction) {
         super();
         this.loadImage('img/6_salsa_bottle/salsa_bottle.png');
@@ -30,6 +43,10 @@ class ThrowableObject extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Handles the animation states for the object.
+     * Switches between spinning and splashing animations based on the `isBroken` state.
+     */
     animate() {
         setInterval(() => {
             if (this.world && this.world.gamePaused) return;
@@ -41,6 +58,11 @@ class ThrowableObject extends MovableObject {
         }, 50);
     }
 
+    /**
+     * Initiates the throwing physics.
+     * Applies an initial vertical speed, gravity, and horizontal movement in the specified direction.
+     * @param {string} direction - The horizontal direction ('left' or 'right').
+     */
     throw(direction) {
         this.speedY = 30;
         this.applyGravity();
@@ -51,16 +73,19 @@ class ThrowableObject extends MovableObject {
             } else {
                 if (direction === 'left') {
                     this.x -= 10;
-                } else {
+                } else { 
                     this.x += 10;
                 }
             }
         }, 25);
     }
 
+    /**
+     * Marks the object as broken.
+     * Stops horizontal/vertical movement to allow the splash animation to play in place.
+     */
     break() {
         this.isBroken = true;
         this.speedY = 0; 
     }
-
 }
