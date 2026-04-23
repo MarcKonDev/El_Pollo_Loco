@@ -16,6 +16,8 @@ body {
     min-height: 100vh;
     margin: 0;
     font-family: 'Zabras', Arial, Helvetica, sans-serif;
+    overflow: hidden; 
+    touch-action: none;
 }
 
 #game_title {
@@ -459,8 +461,10 @@ canvas {
     #fullscreen {
         width: 100vw;
         height: 100vh;
+        height: 100dvh;
         max-width: none;
         max-height: none;
+        margin: 0;
     }
 
     canvas {
