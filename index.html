@@ -3,9 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="./img/8_coin/coin_2.png">
+
     <script src="./models/audio.class.js"></script>
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/movable-object.class.js"></script>
@@ -27,6 +33,7 @@
     <script src="./models/throwable-object.class.js"></script>
     <script src="./models/endboss.class.js"></script>
     <script src="./js/game.js"></script>
+
 </head>
 
 <body>
@@ -69,55 +76,104 @@
                 <rect x="14" y="4" width="4" height="16"></rect>
             </svg>
         </button>
+
+        <div id="control_btns" class="d_none">
+            <div class="move-controls">
+                <button id="left_btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </button>
+                <button id="up_btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="12" y1="19" x2="12" y2="5"></line>
+                        <polyline points="5 12 12 5 19 12"></polyline>
+                    </svg>
+                </button>
+                <button id="right_btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
+            </div>
+            <div class="action-controls">
+                <button id="throw_btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <g transform="rotate(15 12 12)">
+                            <path d="M11 3h2" stroke-width="3" />
+                            <path d="M11.5 3.5v4.5M12.5 3.5v4.5" />
+                            <path d="M9.5 8c-1 0-1.5 1-1.5 3 0 2 0.5 8 1 10h6c0.5-1 1-8 1-10 0-2-0.5-3-1.5-3h-5z" />
+                            <path d="M8.5 12.5h7M8.5 15.5h7" opacity="0.7" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
         <canvas id="canvas" width="720" height="480"></canvas>
         <div id="endscreen_container" class="d_none">
             <img id="endscreen" class="endscreen" src="">
             <button id="restart_btn" onclick="restartGame()">Restart</button>
             <button id="home_btn" onclick="backToHomeScreen()">Home</button>
         </div>
-
-    </div>
-    <div id="overlay" class="d_none">
-        <div class="info_card"><button class="close-x" onclick="toggleInfo()">X</button>
-            <h1 id="overlay_headline">Anleitung</h1>
-            <p>Hier findest du die wichtigsten Steuerungen und Ziele, damit du direkt loslegen kannst.</p>
-            <div class="grid_container">
-                <div class="info_box">
-                    <h3>Steuerung Desktop</h3>
-                    <ol>
-                        <li>← / → bewegen Pepe nach links und rechts.</li>
-                        <li>Leertaste oder ↑ zum Springen.</li>
-                        <li>D wirft eine eingesammelte Flasche.</li>
-                        <li>Enter startet das Spiel.</li>
-                    </ol>
-                </div>
-                <div class="info_box">
-                    <h3>Steuerung Mobile</h3>
-                    <ol>
-                        <li>Links unten findest du Springen, Links und Rechts.</li>
-                        <li>Rechts unten wirfst du mit dem THROW-Button Flaschen.</li>
-                        <li>Im Hochformat erscheint ein Hinweis zum Drehen ins Querformat.</li>
-                    </ol>
-                </div>
-                <div class="info_box">
-                    <h3>Dein Ziel</h3>
-                    <ol>
-                        <li>Sammle Flaschen und Münzen ein.</li>
-                        <li>Besiege große und kleine Hühner per Sprung oder mit einer Flasche.</li>
-                        <li>Den Endboss besiegst du zuverlässig mit Flaschenwürfen.</li>
-                    </ol>
-                </div>
-                <div class="info_box">
-                    <h3>Wichtige Hinweise</h3>
-                    <ol>
-                        <li>Du kannst maximal 5 Flaschen gleichzeitig tragen.</li>
-                        <li>Der Sound bleibt nach dem Umschalten gespeichert.</li>
-                        <li>Nach Sieg oder Niederlage kannst du NEUSTART oder HOME wählen.</li>
-                    </ol>
+        <div id="overlay" class="d_none">
+            <div class="info_card"><button class="close-x" onclick="toggleInfo()">X</button>
+                <h1 id="overlay_headline">Anleitung</h1>
+                <p>Hier findest du die wichtigsten Steuerungen und Ziele, damit du direkt loslegen kannst.</p>
+                <div class="grid_container">
+                    <div class="info_box">
+                        <h3>Steuerung Desktop</h3>
+                        <ol>
+                            <li>← / → bewegen Pepe nach links und rechts.</li>
+                            <li>Leertaste oder ↑ zum Springen.</li>
+                            <li>D wirft eine eingesammelte Flasche.</li>
+                            <li>Enter startet das Spiel.</li>
+                        </ol>
+                    </div>
+                    <div class="info_box">
+                        <h3>Steuerung Mobile</h3>
+                        <ol>
+                            <li>Links unten findest du Springen, Links und Rechts.</li>
+                            <li>Rechts unten wirfst du mit dem THROW-Button Flaschen.</li>
+                            <li>Im Hochformat erscheint ein Hinweis zum Drehen ins Querformat.</li>
+                        </ol>
+                    </div>
+                    <div class="info_box">
+                        <h3>Dein Ziel</h3>
+                        <ol>
+                            <li>Sammle Flaschen und Münzen ein.</li>
+                            <li>Besiege große und kleine Hühner per Sprung oder mit einer Flasche.</li>
+                            <li>Den Endboss besiegst du zuverlässig mit Flaschenwürfen.</li>
+                        </ol>
+                    </div>
+                    <div class="info_box">
+                        <h3>Wichtige Hinweise</h3>
+                        <ol>
+                            <li>Du kannst maximal 5 Flaschen gleichzeitig tragen.</li>
+                            <li>Der Sound bleibt nach dem Umschalten gespeichert.</li>
+                            <li>Nach Sieg oder Niederlage kannst du NEUSTART oder HOME wählen.</li>
+                        </ol>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div id="rotate_device" class="d_none">
+        <div class="rotate_content">
+            <svg viewBox="0 0 24 24" width="80" height="80" fill="none" stroke="white" stroke-width="1.5">
+                <rect x="5" y="2" width="14" height="20" rx="2" transform="rotate(90 12 12)"></rect>
+                <path d="M12 15l3-3-3-3M9 12h6" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <p>Turn your Device to play!</p>
+        </div>
+    </div>
+
 </body>
 
 </html>

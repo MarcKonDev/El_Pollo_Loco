@@ -36,8 +36,9 @@ canvas {
 
 #fullscreen {
     position: relative;
-    width: 720px;
-    height: 480px;
+    max-width: 720px;
+    width: 100%;
+    max-height: 480px;
     margin: 0 auto;
 }
 
@@ -101,10 +102,6 @@ canvas {
     }
 }
 
-.d_none {
-    display: none;
-}
-
 #startscreen-container {
     position: absolute;
     top: 0;
@@ -148,10 +145,6 @@ canvas {
     100% {
         opacity: 1;
     }
-}
-
-.d_none {
-    display: none !important;
 }
 
 #endscreen_container {
@@ -301,20 +294,43 @@ canvas {
     margin-top: 0;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
+    padding: 0 8px;
 }
 
-.info_card {
-    background-color: #f7e8c3; /* Dein beiger Ton */
-    color: #3e2723; /* Dunkelbraune Schrift */
+#overlay h1{
+    margin-left: 8px;
+}
+
+#overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px; /* Weniger Padding am Rand für Mobile */
+}
+
+/* .info_card {
+    background-color: #f7e8c3;
+   
+    color: #3e2723;
+    
     padding: 40px;
     border-radius: 20px;
     border: 4px solid #3e2723;
-    position: relative; /* Damit das X absolut darin positioniert werden kann */
+    position: relative;
     max-width: 900px;
     width: 95%;
     display: flex;
     flex-direction: column;
     align-items: center;
+} */
+
+.info_card {
+    max-height: 80vh; /* Maximal 90% der Bildschirmhöhe */
+    overflow-y: auto; /* Scrollen erlauben, wenn Inhalt zu hoch ist */
+    padding: 20px 30px; /* Kompakteres Padding */
+    position: relative;
+    width: 70%;
+    display: block; /* Block statt Flex, damit Scrolling besser funktioniert */
 }
 
 .grid_container {
@@ -368,9 +384,208 @@ canvas {
     transition: background-color 0.2s;
 }
 
+#control_btns {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 50;
+    display: flex;
+    justify-content: space-between; /* Schiebt Bewegung nach links, Flasche nach rechts */
+    align-items: flex-end;
+    pointer-events: none; /* Klicks gehen durch den Container durch... */
+}
+
+/* Die Gruppen innerhalb des Containers */
+.move-controls, .action-controls {
+    display: flex;
+    gap: 10px;
+    pointer-events: auto; /* ...aber die Buttons selbst sind klickbar */
+}
+
+#control_btns button {
+    width: 60px;  /* Größer für bessere Bedienbarkeit am Handy */
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+}
+
+#control_btns svg {
+    width: 35px;
+    height: 35px;
+}
+
+#rotate_device {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 1000; /* Ganz oben über alles */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.rotate_content svg {
+    margin-bottom: 20px;
+    animation: rotateDevice 2s ease-in-out infinite;
+}
+
+@keyframes rotateDevice {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(-90deg); }
+    100% { transform: rotate(0deg); }
+}
+
+#control_btns button, 
+#canvas,
+#fullscreen {
+    /* Verhindert Scrollen, Pinch-Zoom und andere Standard-Gesten */
+    touch-action: none; 
+}
+
+/* Die Magie: Nur anzeigen, wenn Portrait (Hochformat) */
+@media (orientation: portrait) {
+    #rotate_device {
+        display: flex !important;
+    }
+}
+
+/* Ausblenden, wenn Landscape (Querformat) */
+@media (orientation: landscape) and (max-height: 500px){
+    #rotate_device {
+        display: none !important;
+    }
+    #game_title {
+        display: none;
+    }
+
+    /* Den Body-Abstand entfernen */
+    body {
+        padding: 0;
+        justify-content: flex-start; /* Spiel nach oben schieben */
+    }
+
+    /* Das Spiel auf volle Breite/Höhe bringen */
+    #fullscreen {
+        width: 100vw;
+        height: 100vh;
+        max-width: none;
+        max-height: none;
+    }
+
+    canvas {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Erhält das Seitenverhältnis des Spiels */
+        background-color: black;
+    }
+}
+
+
+
+
+@media (max-width: 730px) {
+
+    #pause_btn,
+    #fullscreen-btn,
+    #info_btn,
+    #music_btn {
+        width: 22px;
+        height: 22px;
+    }
+
+    #restart_btn,
+    #home_btn {
+        font-size: 16px;
+        width: 80px;
+        height: 40px;
+    }
+    #restart_btn {
+        right: 10%; /* Statt 240px */
+        bottom: 20px;
+    }
+    #home_btn {
+        left: 10%; /* Statt 240px */
+        bottom: 20px;
+    }
+
+    #game_title {
+        font-size: 48px;
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
+
+    #control_btns.d_none {
+        display: flex; /* d_none überschreiben, wenn unter 730px */
+    }
+}
+
 @media (max-height: 650px) {
     h1 {
         font-size: 40px;
         top: 10px;
+    }
+}
+
+.d_none {
+    display: none !important;
+}
+
+
+@media (max-width: 850px) and (orientation: landscape) {
+    #overlay_headline {
+        font-size: 32px;
+        margin-top: 0;
+    }
+
+    #overlay p {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .grid_container {
+        grid-template-columns: 1fr 1fr; /* Bleibt 2-spaltig, aber kompakter */
+        gap: 10px;
+    }
+
+    .info_box {
+        padding: 8px;
+        margin: 0;
+    }
+
+    .info_box h3 {
+        font-size: 16px;
+        margin: 0 0 5px 0;
+    }
+
+    .info_box ol {
+        font-size: 12px;
+        padding-left: 20px;
+    }
+
+    .close-x {
+        top: 10px;
+        right: 10px;
+        width: 25px;
+        height: 25px;
+    }
+}
+
+/* Für ganz kleine Handys: Alles untereinander */
+@media (max-width: 600px) {
+    .grid_container {
+        grid-template-columns: 1fr;
     }
 }

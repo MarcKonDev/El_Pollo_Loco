@@ -21,7 +21,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-        this.checkThrow();
+        // this.checkThrow();
         this.playMusic()
     }
 
@@ -35,6 +35,11 @@ class World {
 
     playMusic() {
         this.audio.setupBackgroundMusic('background');
+        if (isGameMuted) {
+        this.audio.muteAll(true);
+    } else {
+        this.audio.SOUNDS.background.play();
+    }
     }
 
     run() {
@@ -43,6 +48,7 @@ class World {
             this.checkObjectsToCollect();
             this.checkBottleCollision();
             this.checkGameOver();
+            this.checkThrow(); // Hier die Prüfung hinzufügen
         }, 200);
 
         setInterval(() => {
@@ -55,9 +61,11 @@ class World {
         if (this.character.isDead()) {
             this.showEndscreen('img/You won, you lost/Game Over.png');
             document.getElementById('pause_btn').classList.add('d_none');
+            document.getElementById('control_btns').classList.add('d_none');
         } else if (this.level.enemies.find(e => e instanceof Endboss)?.isDead()) {
             document.getElementById('pause_btn').classList.add('d_none');
             this.showEndscreen('img/You won, you lost/You Win A.png');
+            document.getElementById('control_btns').classList.add('d_none');
         }
     }
 
@@ -108,20 +116,29 @@ class World {
         });
     }
 
+    // checkThrow() {
+    //     let throwLock = false;
+    //     window.addEventListener('keydown', (e) => {
+    //         if (e.code == 'KeyD' && !throwLock) {
+    //             throwLock = true;
+    //             this.checkThrowObjects();
+    //         }
+    //     });
+    //     window.addEventListener('keyup', (e) => {
+    //         if (e.code == 'KeyD') {
+    //             throwLock = false;
+    //         }
+    //     });
+    // }
+
     checkThrow() {
-        let throwLock = false;
-        window.addEventListener('keydown', (e) => {
-            if (e.code == 'KeyD' && !throwLock) {
-                throwLock = true;
-                this.checkThrowObjects();
-            }
-        });
-        window.addEventListener('keyup', (e) => {
-            if (e.code == 'KeyD') {
-                throwLock = false;
-            }
-        });
+    if (this.keyboard.D) {
+        this.checkThrowObjects();
+        // Damit nicht 60 Flaschen pro Sekunde fliegen, 
+        // setzen wir D kurz auf false oder vertrauen auf das 200ms Intervall oben
+        this.keyboard.D = false; 
     }
+}
 
     checkObjectsToCollect() {
         this.level.coins.forEach((coin, index) => {
@@ -213,10 +230,12 @@ class World {
             this.endbossBar.updateSize(); 
             this.addToMap(this.endbossBar);
         }
+        if (!this.gamePaused) {
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
         });
+    }
     }
 
     addObjectsToMap(objects) {
