@@ -19,6 +19,7 @@ function backToHomeScreen() {
     document.getElementById('endscreen_container').classList.add('d_none');
     document.getElementById('startscreen-container').classList.remove('d_none');
     document.getElementById('control_btns').classList.remove('active-controls');
+    document.getElementById('control_btns').classList.add('d_none'); 
 }
 
 /**
@@ -34,7 +35,9 @@ function startGame() {
     document.getElementById('startscreen-container').classList.add('d_none');
     let isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     if (isTouchDevice) {
-        document.getElementById('control_btns').classList.add('active-controls');
+        let controls = document.getElementById('control_btns');
+        controls.classList.remove('d_none'); // Entferne das "Ausblenden" vom Ende des letzten Spiels
+        controls.classList.add('active-controls'); // Füge das mobile Layout hinzu
     }
 
     initLevel();

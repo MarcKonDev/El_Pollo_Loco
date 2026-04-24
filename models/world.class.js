@@ -116,6 +116,8 @@ class World {
     showEndscreen(imagePath) {
         if (!this.gameStopped) {
             this.gameStopped = true;
+            document.getElementById('control_btns').classList.remove('active-controls');
+            document.getElementById('control_btns').classList.add('d_none');
             setTimeout(() => {
                 let screen = document.getElementById('endscreen');
                 screen.src = imagePath;
