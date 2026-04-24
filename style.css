@@ -104,16 +104,16 @@ canvas {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%; 
+    height: 100%;
     z-index: 20;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 #startscreen {
-    width: 100%;
     height: 100%;
     object-fit: cover;
 }
@@ -363,13 +363,12 @@ canvas {
 }
 
 #control_btns {
-    display: none;
+    display: none; 
     position: absolute;
     bottom: 20px;
     left: 20px;
     right: 20px;
     z-index: 50;
-    display: flex;
     justify-content: space-between; 
     align-items: flex-end;
     pointer-events: none; 
@@ -507,14 +506,9 @@ canvas {
     align-items: center;
 }
 
-#control_btns {
-    display: none !important;
-}
-
-/* Nur anzeigen auf Geräten, die keinen feinen Zeiger (Maus) haben */
 @media (pointer: coarse) {
-    #control_btns {
-        display: flex !important;
+    #control_btns.active-controls {
+        display: flex !important; 
     }
 }
 
@@ -592,10 +586,6 @@ canvas {
         font-size: 48px;
         margin-top: 0;
         margin-bottom: 5px;
-    }
-
-    #control_btns.d_none {
-        display: flex; 
     }
 }
 

@@ -18,7 +18,7 @@ let isGameMuted = localStorage.getItem('isGameMuted') === 'true';
 function backToHomeScreen() {
     document.getElementById('endscreen_container').classList.add('d_none');
     document.getElementById('startscreen-container').classList.remove('d_none');
-    document.getElementById('control_btns').classList.add('d_none');
+    document.getElementById('control_btns').classList.remove('active-controls');
 }
 
 /**
@@ -33,10 +33,10 @@ function startGame() {
     }
     document.getElementById('startscreen-container').classList.add('d_none');
     let isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
     if (isTouchDevice) {
-        document.getElementById('control_btns').classList.remove('d_none');
+        document.getElementById('control_btns').classList.add('active-controls');
     }
+
     initLevel();
     init();
 }
@@ -50,7 +50,10 @@ function restartGame() {
     }
     document.getElementById('impressum_btn').classList.add('d_none');
     document.getElementById('endscreen_container').classList.add('d_none');
-    document.getElementById('control_btns').classList.remove('d_none');
+    let isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouchDevice) {
+        document.getElementById('control_btns').classList.add('active-controls');
+    }
     initLevel();
     init();
 }
@@ -316,12 +319,3 @@ function toggleImpressum() {
     let impressum = document.getElementById('impressum-overlay');
     impressum.classList.toggle('d_none');
 }
-
-/**
- * Add it to your global Escape listener so it closes easily.
- */
-// document.addEventListener('keydown', (event) => {
-//     if (event.key === 'Escape') {
-//         document.getElementById('impressum-overlay').classList.add('d_none');
-//     }
-// });

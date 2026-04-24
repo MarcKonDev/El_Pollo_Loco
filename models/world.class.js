@@ -312,7 +312,7 @@ class World {
      */
     draw() {
         if (this.gamePaused) return;
-        
+
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.save();
         this.ctx.translate(this.camera_x, 0);
@@ -395,5 +395,9 @@ class World {
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
+    }
+
+    gameOverUI() {
+        document.getElementById('control_btns').classList.remove('active-controls');
     }
 }

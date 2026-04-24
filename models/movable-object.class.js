@@ -41,6 +41,9 @@ class MovableObject extends DrawableObject {
     /** @type {number} - Current amount of collected bottles. */
     collectedBottles = 0;
 
+    /** @type {number} - Tracks the current frame of the jump animation. */
+    currentJumpImage = 0;
+
     /**
      * Applies gravity physics to the object.
      * Continuously reduces vertical position if the object is in the air or moving upward.
@@ -92,11 +95,12 @@ class MovableObject extends DrawableObject {
         this.x -= this.speed;
     }
 
-    /**
-     * Triggers an upward movement by setting the vertical speed.
+   /**
+     * Triggers an upward movement and resets jump animation frame.
      */
     jump() {
         this.speedY = 30;
+        this.currentJumpImage = 0; 
     }
 
     /**

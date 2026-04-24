@@ -163,9 +163,23 @@ class Character extends MovableObject {
             this.playAnimation(this.IMAGES_HURT);
             this.resetIdleTimer();
         } else if (this.isAboveGround()) {
-            this.playAnimation(this.IMAGES_JUMPING);
+            this.playJumpAnimation();
         } else {
             this.handleGroundAnimations();
+        }
+    }
+
+    /**
+ * Plays the jumping animation exactly once per jump.
+ */
+    playJumpAnimation() {
+        let i = this.currentJumpImage;
+        let path = this.IMAGES_JUMPING[i];
+        this.img = this.imageCache[path];
+
+        // Erhöhe den Frame-Zähler nur, wenn wir noch nicht am Ende der Animation sind
+        if (this.currentJumpImage < this.IMAGES_JUMPING.length - 1) {
+            this.currentJumpImage++;
         }
     }
 
