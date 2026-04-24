@@ -165,6 +165,7 @@ class Character extends MovableObject {
         } else if (this.isAboveGround()) {
             this.playJumpAnimation();
         } else {
+            this.currentJumpImage = 0;
             this.handleGroundAnimations();
         }
     }

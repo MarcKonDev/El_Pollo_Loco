@@ -298,6 +298,7 @@ class World {
     handleRegularEnemyJumpKill(enemy) {
         enemy.energy = 0;
         this.character.speedY = 15;
+        this.character.currentJumpImage = 0;
         this.audio.play('jump_kill');
         this.audio.play('chicken_kill');
         enemy.loadImage(enemy.IMAGES_DEAD[0]);
