@@ -54,6 +54,11 @@ class MovableObject extends DrawableObject {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
+            } else {
+                // --- DIESER TEIL IST NEU ---
+                // Sobald er den Boden berührt (oder darunter fällt):
+                this.y = 174;    // Erzeuge eine saubere Landung auf dem exakten Wert
+                this.speedY = 0; // Stoppe die Fallgeschwindigkeit komplett
             }
         }, 1000 / 25);
     }

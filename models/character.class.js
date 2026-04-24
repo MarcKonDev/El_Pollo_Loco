@@ -7,7 +7,7 @@ class Character extends MovableObject {
     /** @type {number} */
     x = 100;
     /** @type {number} */
-    y = 74;
+    y = 174;
     /** @type {number} */
     height = 260;
     /** @type {number} */
@@ -21,6 +21,9 @@ class Character extends MovableObject {
     /** * @type {Object} - Collision offsets to fine-tune hitboxes.
      * @property {number} top, bottom, left, right 
      */
+
+    invincibleAfterJump = false;
+    
     offset = {
         top: 110,
         bottom: 10,

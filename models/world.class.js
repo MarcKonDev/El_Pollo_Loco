@@ -76,12 +76,12 @@ class World {
     run() {
         setInterval(() => {
             if (this.gamePaused) return;
-            this.checkObjectsToCollect();
             this.checkBottleCollision();
             this.checkGameOver();
         }, 200);
         setInterval(() => {
             if (this.gamePaused) return;
+            this.checkObjectsToCollect();
             this.checkCollisions();
             this.checkThrow();
         }, 1000 / 60);
@@ -261,7 +261,7 @@ class World {
     processEnemyCollision(enemy) {
         if (this.character.isAboveGround() && this.character.speedY < 0) {
             this.handleEnemyJumpKill(enemy);
-        } else if (!this.character.isHurt()) {
+        } else if (!this.character.isHurt() && !this.character.invincibleAfterJump) {
             this.character.hit();
             this.audio.play('hurt_character');
             this.statusBar.setPercentage(this.character.energy);
@@ -299,6 +299,10 @@ class World {
         enemy.energy = 0;
         this.character.speedY = 15;
         this.character.currentJumpImage = 0;
+        this.character.invincibleAfterJump = true;
+        setTimeout(() => {
+            this.character.invincibleAfterJump = false;
+        }, 200);
         this.audio.play('jump_kill');
         this.audio.play('chicken_kill');
         enemy.loadImage(enemy.IMAGES_DEAD[0]);
